@@ -2,7 +2,7 @@ import React from 'react'
 
 
 const App = () => {
-  const stories= [
+  const stories = [
     {
       title: "React",
       url: "htps://reactjs.org/",
@@ -18,35 +18,47 @@ const App = () => {
       objectID: 1,
     }
   ];
+  console.log('app_renders')
+
+  //callback handler
+  const handleSearch = (event) => {
+    console.log(event.target.value)
+  }
   return (
     <div>
-      <Search/>
-      <List list={stories}/>
+      <Search onSearch={handleSearch} />
+      <List list={stories} />
     </div>
   )
 }
 
 
-const handleChange=(event)=>{
-  //synthetic event 
-  console.log(event);
-  //value of target
-  console.log(event.target.value);
 
-}
-const Search=()=>{
-  return(
+const Search = (props) => {
+
+  const [searchTerm, setSearchTerm] = React.useState('')
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value)
+
+    props.onSearch(event)
+
+  }
+  console.log('search_renders')
+  return (
     <div>
       <h1>My Hacker Stories</h1>
       <label htmlFor="search">Search: </label>
-      <input id="search" type="text" onChange={handleChange}/>
+      <input id="search" type="text" onChange={handleChange} />
       <hr />
     </div>
+
   )
+
 }
 
 
 const List = (props) => {
+  console.log('list_renders')
   return (
     <ul>
       {props.list.map((item) => (
